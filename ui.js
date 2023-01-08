@@ -64,3 +64,5 @@ class UI {
         this.profile.innerHTML = '';
     }
 }
+
+export default new UI();

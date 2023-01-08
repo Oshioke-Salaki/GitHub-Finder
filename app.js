@@ -1,7 +1,7 @@
-const github = new Github;
-const ui = new UI;
+import ui from './ui.js';
+import github from './github.js';
 
-const searchUser = document.getElementById('searchUser')
+const searchUser = document.getElementById('searchUser');
 
 searchUser.addEventListener('keyup', (e) => {
     //get input text
@@ -9,21 +9,20 @@ searchUser.addEventListener('keyup', (e) => {
 
     if (userText !== '') {
         //make http call
-        github.getUser(userText)
-            .then(data => {
-                if (data.profile.message === 'Not Found') {
-                    //show alert
-                    ui.showAlert('User not found', 'alert alert-danger')
-                } else {
-                    //show profile
-                    ui.showProfile(data.profile)
-                }
-            })
+        github.getUser(userText).then((data) => {
+            if (data.profile.message === 'Not Found') {
+                //show alert
+                ui.clearProfile();
+                ui.showAlert('User not found', 'alert alert-danger');
+            } else {
+                //show profile
+                ui.showProfile(data.profile);
+            }
+        });
     } else {
         //clear profile
-        ui.clearProfile()
+        ui.clearProfile();
     }
 
-
-    e.preventDefault()
-})
+    e.preventDefault();
+});
